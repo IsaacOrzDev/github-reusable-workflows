@@ -13,9 +13,9 @@ on:
         type: string
         default: us-west-1
     secrets:
-      AWS_ROLE_ARN:
+      IAM_ROLE_ARN_FOR_ECR:
         required: true
-      AWS_ROLE_ARN_FOR_ECS:
+      IAM_ROLE_ARN_FOR_ECS:
         required: true
 
 jobs:
@@ -44,7 +44,7 @@ jobs:
         if: steps.check_commit.outputs.deploy == 'true'
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN_FOR_ECR }}
+          role-to-assume: ${{ secrets.IAM_ROLE_ARN_FOR_ECR }}
           aws-region: ${{ inputs.aws_region }}
 
       - name: Login to Amazon ECR
@@ -93,7 +93,7 @@ jobs:
         if: steps.check_commit.outputs.deploy == 'true'
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN_FOR_ECS }}
+          role-to-assume: ${{ secrets.IAM_ROLE_ARN_FOR_ECS }}
           aws-region: us-west-1
 
       - name: Update ECS service
